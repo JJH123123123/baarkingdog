@@ -72,7 +72,7 @@ def rotationAll(k_field, shark_y, shark_x):
             break
         # 빈 경우 
         if(new_field[s_y][s_x][0]==-1 or new_field[s_y][s_x]==0): continue
-        possible.append([s_y,s_x, new_field[s_y][s_x][1]])
+        possible.append([s_y,s_x])
     
     return possible, new_field
 
@@ -87,7 +87,7 @@ def main(tmp_field, shark_y, shark_x, ret):
         res = max(res,ret)
         return
 
-    for y,x, dir in possible:
+    for y,x  in possible:
         
         tmp = next_field[y][x][0]
         if(tmp==-1 or tmp == 0): continue
