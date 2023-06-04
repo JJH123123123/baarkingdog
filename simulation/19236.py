@@ -18,6 +18,8 @@ field = [ [0 for i in range(4)] for _ in range(4)]
 for i in range(4):
     for j in range(0,8,2):
         field[i][j//2] = [tmp_field[i][j], tmp_field[i][j+1]]
+
+# 처음 값에 대해서는 따로 빼서 계산 
 first = field[0][0][0]
 
 import copy
@@ -75,15 +77,12 @@ def rotationAll(k_field, shark_y, shark_x):
     return possible, new_field
 
 res = 0
-cnt = 1
 field[0][0][0] = 0
-flag =  False
 
 def main(tmp_field, shark_y, shark_x, ret):
     global res, first
     possible, next_field = rotationAll(tmp_field,shark_y,shark_x)
-
-
+ 
     if len(possible)==0:
         res = max(res,ret)
         return
@@ -96,12 +95,13 @@ def main(tmp_field, shark_y, shark_x, ret):
 
         next_field[shark_y][shark_x][0] = -1
         next_field[y][x][0] = 0
+        
         main(next_field,y,x,ret)
         ret -= tmp
 
         next_field[y][x][0] = tmp
         next_field[shark_y][shark_x][0] = 0
 
-
 main(field, 0,0,0)
 print(res+first)
+
