@@ -24,23 +24,19 @@ import copy
 
 def rotationAll(k_field, shark_y, shark_x):
     new_field = copy.deepcopy(k_field)
-    # print(new_field[0][0])
     st = dict()
     for i in range(4):
         for j in range(4):
             if(new_field[i][j][0]==0 or new_field[i][j][0]==-1): continue
-            # field[i][j]       # cor + dir
-            # print(new_field[i][j][0])
             st[new_field[i][j][0]] = [i,j, new_field[i][j][1]]
 
     for key in range(1,17):
         if(st.get(key,0)==0): continue
         cur_y, cur_x, cur_dir = st[key]
-        # print("cur", key,cur_dir)
-        # print("key",key,cur_dir)
+
         for _ in range(1,1+8):
             ny, nx = cur_y + mv[cur_dir][0], cur_x + mv[cur_dir][1]
-            # print(key,ny,nx,cur_dir)
+
             if(0>ny or 0>nx or ny>=4 or nx>=4):
                 cur_dir = (cur_dir+1)%9
                 if(cur_dir==0):
@@ -51,12 +47,7 @@ def rotationAll(k_field, shark_y, shark_x):
                 if(cur_dir==0):
                     cur_dir = 1
                 continue              
-
-            # print()
-            # for row in new_field:
-            #     print(*row)
-            # print()
-            
+ 
             # 빈 공간 + 다른 물고기만 등장
             # 자리 변경 
             # print(key,cur_dir)
@@ -65,10 +56,7 @@ def rotationAll(k_field, shark_y, shark_x):
             new_field[ny][nx], new_field[cur_y][cur_x] = new_field[cur_y][cur_x], new_field[ny][nx]
             st[next_num] = [cur_y,cur_x,next_dir]
             st[key] = [ny,nx,cur_dir]
-            # print("next",1)
-            # for row in new_field:
-            #     print(*row)
-            # print(st)
+   
             break
     # 상어 자리 
     s_dir = new_field[shark_y][shark_x][1]
@@ -78,7 +66,6 @@ def rotationAll(k_field, shark_y, shark_x):
 
     while(1):
         s_y, s_x= s_y + mv[s_dir][0], s_x + mv[s_dir][1]
-        # print(s_y,s_x)
         if(s_y<0 or s_x<0 or s_y>=4 or s_x>=4):
             break
         # 빈 경우 
@@ -94,15 +81,11 @@ flag =  False
 
 def main(tmp_field, shark_y, shark_x, ret):
     global res, first
-    # if(flag): return/
     possible, next_field = rotationAll(tmp_field,shark_y,shark_x)
-    # print(possible)
 
 
     if len(possible)==0:
         res = max(res,ret)
-        # print("ret", ret)
-        # print(res)
         return
 
     for y,x, dir in possible:
@@ -110,31 +93,15 @@ def main(tmp_field, shark_y, shark_x, ret):
         tmp = next_field[y][x][0]
         if(tmp==-1 or tmp == 0): continue
         ret += tmp
-        # print("temp", tmp)
-        # print("before")
-        # for row in next_field:
-        #     print(*row)
-        # print()
+
         next_field[shark_y][shark_x][0] = -1
         next_field[y][x][0] = 0
         main(next_field,y,x,ret)
         ret -= tmp
-        # print("after",y,x,res+first)
-        # for row in next_field:
-        #     print(*row)
+
         next_field[y][x][0] = tmp
         next_field[shark_y][shark_x][0] = 0
 
 
 main(field, 0,0,0)
-
-# possible, next_field = rotationAll(field,0,0)
 print(res+first)
-
-# for row in next_field:
-#     print(*row)
-# next_field[0][0][0]= -1
-# next_field[1][1][0]= 0
-# possible, next_field = rotationAll(next_field,0,0)
-# print("shark dir : ", field[0][0])
-# print(possible)
