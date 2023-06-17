@@ -1,4 +1,3 @@
-
 from sys import stdin
 from itertools import combinations as combi
 from collections import deque
@@ -27,7 +26,6 @@ def bfs(comb):
     deq = deque(comb)
 
     for i in range(len(deq)):
-        cnt+=1
         y,x = deq[i]
         vis_time[y][x] = True # 방문한 세균
     T = 0
